@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\Django+React Twitter Clone"
+		},
+		{
+			"path": "..\\..\\coursera ds&algo"
+		}
+	],
+	"settings": {
+		"python.pythonPath": "C:\\Users\\gupte\\anaconda3\\envs\\twitter_clone\\python.exe"
+	}
+}
