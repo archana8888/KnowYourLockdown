@@ -1,0 +1,113 @@
+body {
+  background: #000000;
+  color: #777;
+  font-family: Montserrat, Arial, sans-serif;
+}
+
+.body-bg {
+  background: #F3F4FA !important;
+}
+
+h1, h2, h3, h4, h5, h6, strong {
+  font-weight: 600;
+}
+
+.box .apexcharts-xaxistooltip {
+  background: #1B213B;
+  color: #fff;
+}
+
+.content-area {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.box {
+  background-color: #4f4f4f;
+  padding-top: 25px; 
+  border-radius: 4px;
+  margin-bottom:10px
+}
+
+
+.radialbox {
+  max-height: 333px;
+  margin-bottom: 60px;
+}
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: #2c3e50;
+  background-image: none;
+  
+  
+}
+/* Remove IE arrow */
+select::-ms-expand {
+  display: none;
+}
+/* Custom Select */
+.select {
+  position: relative;
+  display: flex;
+  width: 20em;
+  height: 3em;
+  line-height: 3;
+  background: #2c3e50;
+  overflow: hidden;
+  border-radius: .25em;
+  align-items:center;
+}
+select {
+  flex: 1;
+  padding: 0 .5em;
+  color: #fff;
+  cursor: pointer;
+}
+/* Arrow */
+.select::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: #34495e;
+  cursor: pointer;
+  pointer-events: none;
+  -webkit-transition: .25s all ease;
+  -o-transition: .25s all ease;
+  transition: .25s all ease;
+}
+/* Transition */
+.select:hover::after {
+  color: #f39c12;
+}
+
+.bg-c-b {
+  background-color: #333335;
+}
+
+@media all and (max-width: 500px) {
+  .card-list {
+    /* On small screens, we are no longer using row direction but column */
+    flex-direction: column;
+  }
+
+  .card{
+    width: auto;
+    height: 25vh;
+  }
+
+  .card-body p{
+    font-size: 5.9vh;
+  }
+
+  .card-body h4{
+    font-size: 2.8vh;
+  }
+}

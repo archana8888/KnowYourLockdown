@@ -1,0 +1,17 @@
+allowed_services= ['All Health Services (including AYUSH) to remain functional',
+                    'All agricultural and horticultural activities to remain fully functional',
+                    'Operations of the fishing (marine/inland) aquaculture industry to remain functional',
+                    'Plantation activities such as tea, coffee and rubber plantations to remain functional with maximum of 50% workers',
+                    'Animal husbandry activities to remain functional',
+                    'Financial sector to remain functional',
+                    'Social sector to remain functional',
+                    'MNREGA works are allowed with strict implementation of social distancing and face mask',
+                    'Public Utilities to remain functional',
+                    'Movement of loading and unloading of goods/cargo (inter and intra) State is allowed',
+                    'Supply of essential goods is allowed',
+                    'Commercial and Private establishments will be allowed to operate',
+                    'Industries/ Industrial Establishments (both Government and Private) will be allowed to operate',
+                    'Construction activities will be allowed to operate',
+                    'Private vehicles for emergency services, including medical and veterinary care and for procuring essential commodities and all personnel traveling to place of work in exempted categories as per the instructions of State/UT local authority are allowed',
+                    'Offices of the Government of India and Offices of the State and UT Governments will remain open'
+                    ]

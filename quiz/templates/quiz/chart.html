@@ -1,0 +1,319 @@
+{% extends 'quiz/base.html' %}
+{%load static%}
+
+{%block content%}
+<html>
+    <head><title>Charts</title></head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">   
+    <script  src="{% static '/js/state.js'%}"></script>
+  
+    <link rel="stylesheet" href="{% static 'css/charts.css' %}">
+    <body>
+        <div id="wrapper">
+
+		<div class="content-area">
+			<div class="container-fluid">
+				<div class="main">
+
+					
+					<div class="row mt-4">
+						<div class="col-md-6">
+								<div class="box  mt-4">
+									<div id="chartLineSentAll"> </div>
+								</div>
+						</div>
+						<div class="col-md-6">
+								<div class="box  mt-4">
+									<div id="chartLinePatientAll"> </div>
+								</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+								<div class="box columnbox mt-4">
+										<div id="chartBarSentiment"> </div>
+								</div>
+						</div>
+                        <div class="col-md-6">
+								<div class="box columnbox mt-4">
+										<div id="chartBarPatient"> </div>
+								</div>
+						</div>
+					</div>
+                    <form id="myform" action ="{%url 'getdata'%}" method="POST">
+                        {%csrf_token%}
+                        <div class="options" id="options">                 
+                        <div id="selection" class="select">
+                            <select   id="listBox" onchange='submitState();' name = 'state' selected = "'{{state}}'"></select>
+                        </div>
+                    <div class="row state" >
+						<div class="col-md-6 state">
+								<div class="box columnbox mt-4 state">
+										<div id="chartLineSentimentState" class ="state"> </div>
+								</div>
+						</div>
+                        <div class="col-md-6 state">
+								<div class="box columnbox mt-4 state">
+										<div id="chartLinePatientState" class = "state"> </div>
+								</div>
+						</div>
+					</div>
+                    <div class ="select districtlist">
+                    <select id='secondlist' name ='district' onchange='submitDistrict();'></select>
+                    </div>
+                </form>
+                    
+
+
+                    <div class="row district">
+						<div class="col-md-6 district">
+								<div class="box columnbox mt-4 district">
+										<div id="chartLineSentimentDistrict" class = "district"> </div>
+								</div>
+						</div>
+                        <div class="col-md-6 districtlist">
+								<div class="box columnbox mt-4 district">
+										<div id="chartLinePatientDistrict" class = "district"> </div>
+								</div>
+						</div>
+					</div>
+					
+				</div>
+
+			</div>
+		</div>
+	</div>
+        
+        
+        
+          
+
+    </body>
+    <script src="{% static '/js/charts.js'%}"></script>
+    <script>
+
+    function submitState () {
+        console.log($('#listBox').val());
+      $("#myform").submit()
+
+    };
+    function submitDistrict () {
+        $("#listBox").val(statename).change();
+        console.log($('#listBox').val());
+      $("#myform").submit()
+
+    };
+    
+      var dataposCountry = [];
+      var dataneuCountry =[];
+      var datesCountry = [];
+      var datanegCountry=[];
+      {%for value in cdf.pos%}
+          dataposCountry.push({{value}});
+      {%endfor%}
+      {%for value in cdf.neu%}
+          dataneuCountry.push({{value}});
+      {%endfor%}
+      {%for value in cdf.neg%}
+          datanegCountry.push({{value}});
+      {%endfor%}
+      {%for value in cdf.Date%}   
+          datesCountry.push('{{value}}');
+      {%endfor%} 
+  
+
+      var dataposstate = [];
+      var dataneustate =[];
+      var datesstate = [];
+      var datanegstate=[];
+      {%for value in sdf.pos%}
+          dataposstate.push({{value}});
+      {%endfor%}
+      {%for value in sdf.neu%}
+          dataneustate.push({{value}});
+      {%endfor%}
+      {%for value in sdf.neg%}
+          datanegstate.push({{value}});
+      {%endfor%}
+      {%for value in sdf.Date%}   
+          datesstate.push('{{value}}');
+      {%endfor%}
+      var dataposTop10 = [];
+      var dataneuTop10 =[];
+      var datesTop10 = [];
+      var datanegTop10=[];
+      var statesTop10 =[];
+      {%for value in state_df.pos%}
+          dataposTop10.push({{value}});
+      {%endfor%}
+      {%for value in state_df.neu%}
+          dataneuTop10.push({{value}});
+      {%endfor%}
+      {%for value in state_df.neg%}
+          datanegTop10.push({{value}});
+      {%endfor%}
+      {%for value in state_df.date%}   
+          datesTop10.push('{{value}}');
+      {%endfor%}
+      {%for value in state_df.state%}   
+          statesTop10.push('{{value}}');
+      {%endfor%}
+      var datespatient = [];
+      var active =[];
+      var cured = [];
+      var deaths=[];
+      {%for value in patient_total.active%}
+          active.push({{value}});
+      {%endfor%}
+      {%for value in patient_total.cured%}
+          cured.push({{value}});
+      {%endfor%}
+      {%for value in patient_total.deaths%}
+          deaths.push({{value}});
+      {%endfor%}
+      {%for value in patient_total.Date%}   
+          datespatient.push('{{value}}');
+      {%endfor%} 
+            active_gains = [];
+            cured_gains = [];
+            deaths_gains = [];
+        for (i =0 ;i < active.length-1;i++){
+            active_gains.push(active[i+1]-active[i]);
+            cured_gains.push(cured[i+1]-cured[i]);
+            deaths_gains.push(deaths[i+1]-deaths[i]);
+        }
+      datespatient.shift();
+      var statespatientTop10 = [];
+      var activepatientTop10 =[];
+      var curedpatientTop10 = [];
+      var deathspatientTop10=[];
+      {%for value in patient_top10.active%}
+          activepatientTop10.push({{value}});
+      {%endfor%}
+      {%for value in patient_top10.cured%}
+          curedpatientTop10.push({{value}});
+      {%endfor%}
+      {%for value in patient_top10.deaths%}
+          deathspatientTop10.push({{value}});
+      {%endfor%}
+      {%for value in patient_top10.state%}   
+          statespatientTop10.push('{{value}}');
+      {%endfor%}
+      var datespatientstate = [];
+      var activestate =[];
+      var curedstate = [];
+      var deathsstate=[];
+      {%for value in state_patient.active%}
+          activestate.push({{value}});
+      {%endfor%}
+      {%for value in state_patient.cured%}
+          curedstate.push({{value}});
+      {%endfor%}
+      {%for value in state_patient.deaths%}
+          deathsstate.push({{value}});
+      {%endfor%}
+      {%for value in state_patient.Date%}   
+          datespatientstate.push('{{value}}');
+      {%endfor%} 
+            active_gains_state = [];
+            cured_gains_state = [];
+            deaths_gains_state = [];
+        for (i =0 ;i < activestate.length-1;i++){
+            active_gains_state.push(activestate[i+1]-activestate[i]);
+            cured_gains_state.push(curedstate[i+1]-curedstate[i]);
+            deaths_gains_state.push(deathsstate[i+1]-deathsstate[i]);
+        }
+      datespatientstate.shift();
+      var datespatientdistrict = [];
+      var activedistrict =[];
+      var cureddistrict = [];
+      var deathsdistrict=[];
+      {%for value in district_patient.active%}
+          activedistrict.push({{value}});
+      {%endfor%}
+      {%for value in district_patient.cured%}
+          cureddistrict.push({{value}});
+      {%endfor%}
+      {%for value in district_patient.deaths%}
+          deathsdistrict.push({{value}});
+      {%endfor%}
+      {%for value in district_patient.Date%}   
+          datespatientdistrict.push('{{value}}');
+      {%endfor%} 
+            active_gains_district = [];
+            cured_gains_district = [];
+            deaths_gains_district = [];
+        for (i =0 ;i < activedistrict.length-1;i++){
+            active_gains_district.push(activedistrict[i+1]-activedistrict[i]);
+            cured_gains_district.push(cureddistrict[i+1]-cureddistrict[i]);
+            deaths_gains_district.push(deathsdistrict[i+1]-deathsdistrict[i]);
+        }
+      datespatientdistrict.shift();
+      var dataposdistrict = [];
+      var dataneudistrict =[];
+      var datesdistrict = [];
+      var datanegdistrict=[];
+      {%for value in district_sentiment.pos%}
+          dataposdistrict.push({{value}});
+      {%endfor%}
+      {%for value in district_sentiment.neu%}
+          dataneudistrict.push({{value}});
+      {%endfor%}
+      {%for value in district_sentiment.neg%}
+          datanegdistrict.push({{value}});
+      {%endfor%}
+      {%for value in district_sentiment.Date%}   
+          datesdistrict.push('{{value}}');
+      {%endfor%} 
+      </script>
+      <script src="{% static '/js/charts.js'%}"></script>
+      <script>
+      optionsLineSentimentAll= getChartOptions(dataposCountry,dataneuCountry,datanegCountry,datesCountry,'Sentiments','Positive','Neutral','Negative')
+      var chartLineSentAll = new ApexCharts(document.querySelector("#chartLineSentAll"), optionsLineSentimentAll);
+      chartLineSentAll.render();
+      optionLinePatientAll = getChartOptions(cured_gains,active_gains,deaths_gains,datespatient,'Patient Count','Cured','Active','Deaths');
+      var chartLinePatientAll = new ApexCharts(document.querySelector("#chartLinePatientAll"), optionLinePatientAll);
+      chartLinePatientAll.render();
+      optionsBarSentiment = getBarOptions(dataposTop10,dataneuTop10,datanegTop10,statesTop10,'Top 10 States-Sentiments','Positive','Neutral','Negative');
+      var chartBarSentiment = new ApexCharts(document.querySelector("#chartBarSentiment"),  optionsBarSentiment);
+      chartBarSentiment.render();
+      optionsBarPatient = getBarOptions(curedpatientTop10,activepatientTop10,deathspatientTop10,statespatientTop10,'Top 10 States-COVID-19','Cured','Active','Deaths');
+      var chartBarPatient = new ApexCharts(document.querySelector("#chartBarPatient"),  optionsBarPatient);
+      chartBarPatient.render();
+      let statename = '{{state}}';
+      let districtname ='{{district}}'
+      if(statename!='') {
+        selct_district(statename);
+        optionsLineSentimentState = getChartOptions(dataposstate,dataneustate,datanegstate,datesstate,statename,'Positive','Neutral','Negative')
+        var chartLineSentimentState = new ApexCharts(document.querySelector("#chartLineSentimentState"), optionsLineSentimentState);
+        chartLineSentimentState.render();
+        optionsLinePatientState = getChartOptions(cured_gains_state,active_gains_state,deaths_gains_state,datespatientstate,statename,'Cured','Active','Deaths')
+        var chartLinePatientState = new ApexCharts(document.querySelector("#chartLinePatientState"), optionsLinePatientState);
+        chartLinePatientState.render();
+        $('.districtlist').show();
+      }
+      else {
+          $('#secondlist').hide();
+          $('.state').hide();
+          $('.district').hide();
+          $('.districtlist').hide();
+         
+      }
+
+    if(districtname!= 'None' & districtname != 'SELECT DISTRICT') {
+        optionsLineSentimentDistrict = getChartOptions(dataposdistrict,dataneudistrict,datanegdistrict,datesdistrict,districtname,'Positive','Neutral','Negative')
+        var chartLineSentimentDistrict = new ApexCharts(document.querySelector("#chartLineSentimentDistrict"), optionsLineSentimentDistrict);
+        chartLineSentimentDistrict.render();
+        optionsLinePatientDistrict = getChartOptions(cured_gains_district,active_gains_district,deaths_gains_district,datespatientdistrict,districtname,'Cured','Active','Deaths')
+        var chartLinePatientDistrict = new ApexCharts(document.querySelector("#chartLinePatientDistrict"), optionsLinePatientDistrict);
+        chartLinePatientDistrict.render();
+      }
+      else {
+          $('.district').hide();
+          
+      }
+    </script>
+</html>
+{%endblock%}
+      

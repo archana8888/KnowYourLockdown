@@ -1,0 +1,158 @@
+{% extends 'quiz/base.html'%}
+{%load static%}
+{%block content%}
+
+<!DOCTYPE html>
+<html>
+    <head></head>
+    {% comment %} <link rel="stylesheet" href="{% static 'css/news.css' %}"> {% endcomment %}
+    
+    <style>
+
+    body{
+        color:#fff;
+    }
+    #tweet {
+      width: 400px !important;
+    }
+  
+    #tweet iframe {
+      border: none !important;
+      box-shadow: none !important;
+    }
+    .space{
+      margin: 2vw 0vw 0vw 2vw;
+    }
+    </style>
+   
+    <body>
+        <br>
+        <br>
+      
+            
+           
+                <h3 class="doc-title doc-first">Services</h3>
+                <br>
+                <div class="bg-c-b pt-2">
+                 <p >
+               <center><h4> Here's the complete list of services and activities to be allowed operation in Unlock 1.0: </h4></center>
+               <br>
+               <ol class="list-group list-group-flush">
+                {% for service in allowed_services %}
+                    <li class="list-group-item list-group-item-dark1" id="service{{service}}">○ {{ service }}</li>
+                    {% endfor %}
+              </ol>
+              </p>
+              </div>
+        
+       
+            
+       
+        </ol>
+
+       <br>
+        <br>
+      
+            
+           
+                <h3 class="doc-title doc-first">Today's News</h3>
+                <br>
+            <div class="row">
+            {% for news in data %}
+            <div class="col-sm-4 col-md-4 col-sm-6">
+                <figure class="snip1527">
+                    <div class="image"><img src="{{news.image}}" alt="pr-sample23" /></div>
+                    <figcaption>
+                     
+                      
+                      <p>
+                        {{news.title}}
+                      </p>
+                    </figcaption>
+                    <a href="{{news.link}}"></a>
+                  </figure>
+
+            </div>
+            {% endfor %}
+            </div>
+            <br>
+        <br>
+      
+            
+           
+                <h3 class="doc-title doc-first">Tweets</h3>
+                <br>
+          
+            <div class='row'>
+                
+                    <div class ="space"id="id1" tweetID="{{id1}}"></div>
+              
+                    <div class ="space"id="id2" tweetID="{{id2}}"></div>
+                
+                
+                    <div class ="space"id="id3" tweetID="{{id3}}"></div>
+                
+           
+                
+                    <div class ="space"id="id4" tweetID="{{id4}}"></div>
+                
+                
+                    <div class ="space"id="id5" tweetID="{{id5}}"></div>
+                
+                
+                    <div class="space"id="id6" tweetID="{{id6}}"></div>
+                    
+            </div>
+  <script sync src="https://platform.twitter.com/widgets.js"></script>
+  
+  <script>
+ 
+    function EmTweet(div){
+    var tweet =  document.getElementById(div);
+      var id = tweet.getAttribute("tweetID");
+     
+      twttr.widgets.createTweet(
+        id, tweet,
+        {
+          conversation : 'none',    // or all
+          cards        : 'hidden',  // or visible
+          linkColor    : '#cc0000', // default is blue
+          theme        : 'dark'    // or dark
+          
+        }).then (function (el) {
+        $(div).removeClass('space');
+        console.log(div);
+        });
+      
+     
+       
+      
+    };
+    $("[id^=service]").hide();
+    $(document).ready(function () {
+            var divs = $("[id^=service]");
+            var i = 0;
+            var loop = window.setInterval(function () {
+                i++;
+                $(divs[i]).fadeIn(500);
+                $(divs[i]).animate({margin : "0 0 0 10px"});
+               $(divs[i]).animate({margin : "0 0 0 0"});
+                if (i == divs.length)
+                    clearInterval(loop);
+            }, 300);
+        });
+        EmTweet('id1');
+        EmTweet('id2');
+        EmTweet('id3');
+        EmTweet('id4');
+        EmTweet('id5');
+        EmTweet('id6');
+    
+  
+  
+  </script> 
+            
+        
+    </body>
+</html>
+{%endblock%}

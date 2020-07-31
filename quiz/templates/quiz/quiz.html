@@ -1,0 +1,291 @@
+{% extends "quiz/base.html" %}
+{% block content %}
+{%load static%}
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="{% static 'css/charts.css' %}">
+<script src="{% static '/js/state.js'%}"></script>
+<script src="{% static '/js/charts.js'%}"></script>
+<style>
+body {
+  background: #000000;
+  color: #777;
+  font-family: Montserrat, Arial, sans-serif;
+}
+.district{
+  margin-top:5px;
+}
+.dark{
+  background :#484848;
+  color:#ffffff
+}
+.vbs{
+  background:##2E2E2E;
+}
+.quiz{
+  margin: 3vw 0 0 1vw;
+}
+</style>
+
+</head>
+<body>
+<div class="p-3 bg-c-b border text-white">
+<p>Infectious disease outbreaks, like the current coronavirus (COVID-19), can be scary and can affect our mental health.
+We conducted a small survey among our peers to find out if the lockdown enforced is having any negative effect on their mental health.
+Below are the results of the same.<br /><br />
+You can help us to get better results by taking this short mental health quiz. <br />
+<!-- Button trigger modal -->
+<button type="button" class="btn bg-info text-white quiz" data-toggle="modal" data-target="#staticBackdrop">
+  Take the Mental Health Quiz!
+</button>
+</p> 
+</div>
+
+<form>
+{%csrf_token%}
+<!-- Modal 1-->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header dark">
+        <h5 class="modal-title " id="staticBackdropLabel">Mental Health Quiz</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body dark">
+        <div class="text">
+          <h4 id="Question">Select your State and District</h4> <br>
+        </div>
+        <a id = "help"href="https://www.vandrevalafoundation.com/"></a>
+        <div class="options" id="options">
+                  
+            <div id="selection" class ="select">
+              <select id="listBox" onchange='selct_district(this.value)'></select>
+            </div>
+            <div class="district select">
+              <select id='secondlist'></select>
+            </div>
+            <div class="form-check" id="box1" style ="visibility : hidden;">
+              <input class="form-check-input" type="radio" name="exampleRadios" id="Radios1" value="option1" checked >
+              <label class="form-check-label" for="exampleRadios1" id="label1">
+                Below 18 years
+              </label>
+            </div>
+            <div class="form-check" id="box2" style ="visibility : hidden;">
+              <input class="form-check-input" type="radio" name="exampleRadios" id="Radios2" value="option2" >
+              <label class="form-check-label" for="exampleRadios2"  id="label2">
+                18-30 years
+              </label>
+            </div>
+            <div class="form-check" id="box3" style ="visibility : hidden;">
+              <input class="form-check-input" type="radio" name="exampleRadios" id="Radios3" value="option3" >
+              <label class="form-check-label" for="exampleRadios2"  id="label3">
+                Above 30 years
+              </label>
+            </div>
+        </div>
+
+      </div>
+      <div class="modal-footer dark">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" style ="visibility : hidden;" id="close">Close</button>
+        <button type="button" class="btn btn-dark vbs"  id="next" >Next</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+<div id="wrapper">
+
+		<div class="content-area">
+			<div class="container-fluid">
+				<div class="main">
+
+					<div class="row mt-4">
+						<div class="col-md-6">
+								<div class="box  mt-5">
+									<div id="chartRadialLockdown"> </div>
+								</div>
+						</div>
+            <div class="col-md-6">
+								<div class="box  mt-5">
+									<div id="chartRadialAge"> </div>
+								</div>
+						</div>
+            <div class="col-md-6">
+								<div class="box  mt-5">
+									<div id="chartRadialGender"> </div>
+								</div>
+						</div>
+					</div>
+					</div>
+					
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+
+
+<script>
+$('.district').hide();
+$("#listBox").change(function(){
+$('.district').show();
+});
+
+var values = [];
+var count = 0;
+$('#next').click(function ()
+  {
+    var Question = document.getElementById("Question");
+      if(($("#listBox").val()!='SELECT STATE') && ($("#secondlist").val()!='SELECT DISTRICT'))
+      {
+        count = count + 1;
+        
+        var options = document.getElementById("Options");
+        var box1 = document.getElementById("box1");
+        var box2 = document.getElementById("box2");
+        var box3 = document.getElementById("box3");
+        var label1 = document.getElementById("label1");
+        var label2 = document.getElementById("label2");
+        var label3 = document.getElementById("label3");
+        var next = document.getElementById("next");
+        var close = document.getElementById("close");
+        var Radios2 = document.getElementById("Radios2");
+        if(count>=2){
+            value = $("input[name='exampleRadios']:checked").parent().text();
+        values.push(value.trim());
+        
+        }
+        else{
+            value = $("#listBox").val();
+            value1 = $("#secondlist").val();
+            values.push(value);
+            values.push(value1);
+        }
+        if(Question.innerHTML === "Select your State and District" || Question.innerHTML === "Select a State/District!")
+        {
+        $('.district').hide();
+        Question.innerHTML = "Under which age-group do you fall in?";
+        selection.style.display = 'none';
+        box1.style.visibility = 'visible';
+        box2.style.visibility = 'visible';
+        box3.style.visibility = 'visible';
+        
+        
+        }
+        else if(Question.innerHTML === "Under which age-group do you fall in?")
+        {
+        Question.innerHTML = "You identify yourself to which gender?";
+        label1.innerHTML = "Female";
+        label2.innerHTML = "Male";
+        label3.innerHTML = "Other";
+                
+        }
+        else if(Question.innerHTML === "You identify yourself to which gender?")
+        {
+        Question.innerHTML = "Is the Lockdown having any negative effect on your mental health?";
+        label1.innerHTML = "Yes";
+        label2.innerHTML = "No";
+        label3.innerHTML = "Maybe";
+                
+        }
+        else if(Question.innerHTML === "Is the Lockdown having any negative effect on your mental health?")
+        {
+          if(Radios2.checked)
+          {
+              Question.innerHTML ="Thank you for taking this test";
+              box1.style.visibility = 'hidden';
+              box2.style.visibility = 'hidden';
+              box3.style.visibility = 'hidden';
+              close.style.visibility = 'visible';
+              next.textContent = "SUBMIT";
+              next.style.visibility = 'hidden';
+          }
+          else
+          {
+            {
+              Question.innerHTML = "Have you tried talking to any therapist or reached out to some kind of help?";
+              label1.innerHTML = "Yes";
+              label2.innerHTML = "No";
+              //label3.innerHTML = "Maybe";
+              
+              }
+                  
+          }      
+            
+        }
+        
+        
+        
+        else if(Question.innerHTML = "Have you tried talking to any therapist or reached out to some kind of help?")
+        {
+        Question.innerHTML ="Thank you for taking this test"
+        $('#help').html('https://www.vandrevalafoundation.com/');
+        box1.style.visibility = 'hidden';
+        box2.style.visibility = 'hidden';
+        box3.style.visibility = 'hidden';
+        close.style.visibility = 'visible';
+        next.textContent = "SUBMIT";
+        next.style.visibility = 'hidden';
+        
+
+        }
+        else if(Question.innerHTML == "Thank you for taking this test")
+        {
+        
+        
+
+        }
+        if(next.textContent == "SUBMIT"){
+            $.ajax({
+                type:'GET',
+                url : '/submit/',
+                data : {
+                    state : values[0],
+                    district : values[1],
+                    age : values[2],
+                    gender : values[3],
+                    negative_effect : values[4],
+                    help : values[5],
+
+                },
+                success : function(data)
+                {
+                    
+                }
+            })
+        }
+      }
+      else{
+        Question.innerHTML = "Select a State/District!"
+      }
+  });
+  
+const yes={{yes}};
+const no={{no}};
+const maybe={{maybe}};
+const age={{age}};
+const age_above={{age_above}};
+const age_below={{age_below}};
+const male={{male}};
+const female={{female}};
+const other={{other}};
+optionsRadialLockdown = getRadialOptions(yes.toFixed(2),no.toFixed(2),maybe.toFixed(2),'Negative effect due to lockdown','Yes','No','Maybe');
+var chartRadialLockdown = new ApexCharts(document.querySelector("#chartRadialLockdown"), optionsRadialLockdown);
+chartRadialLockdown.render();
+optionsRadialAge = getRadialOptions(age.toFixed(2),age_below.toFixed(2),age_above.toFixed(2),'Age group of affected','18-30 years','Below 18 years','Above 30 years');
+var chartRadialAge = new ApexCharts(document.querySelector("#chartRadialAge"), optionsRadialAge);
+chartRadialAge.render();
+optionsRadialGender = getRadialOptions(male.toFixed(2),female.toFixed(2),other.toFixed(2),'Gender  of affected','Male','Female','Other');
+var chartRadialGender = new ApexCharts(document.querySelector("#chartRadialGender"), optionsRadialGender);
+chartRadialGender.render();
+</script>
+</html>
+{%endblock%}

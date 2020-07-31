@@ -1,0 +1,80 @@
+{% extends "quiz/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+.nav-link{
+  background : #000000;
+  color:#ffffff;
+}
+#exp{
+  color:#ffffff;
+}
+.active{
+  background: #00adb5 !important;
+}
+.nav-link:hover{
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  font-weight : bold;
+}
+</style>
+<div class="container">
+<p id="exp"></p>
+<ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
+    <li class="nav-item ">
+      <a class="nav-link active" id="sentiment" data-toggle="pill" data-placement="bottom" title="Shows sentiments of people all over India" href="#viz1593968453321" role="tab" aria-controls="pills-home" aria-selected="true">Sentiment Analysis</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="patient" data-toggle="pill" data-placement="bottom" title="Shows patient count of all the states and districts of India" href="#viz1593968345390" role="tab" aria-controls="pills-profile" aria-selected="false">Patient Count</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="mentalh" data-toggle="pill" data-placement="bottom" title="Shows if the states have any negative effect due to lockdown" href="#viz1593968397906" role="tab" aria-controls="pills-contact" aria-selected="false">Mental Health</a>
+    </li>
+  </ul>
+<div class='tableauPlaceholder' id='viz1594044066691' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Bo&#47;Book1sentiment&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Book1sentiment&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Bo&#47;Book1sentiment&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1594044066691');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='727px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+   
+   
+<div class='tableauPlaceholder' id='viz1594043334254' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Bo&#47;Book2covid_15931107981670&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='Book2covid_15931107981670&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Bo&#47;Book2covid_15931107981670&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1594043334254');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='727px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+    
+    
+<div class='tableauPlaceholder' id='viz1594048145809' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Me&#47;MentalHealth_15939620977440&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='MentalHealth_15939620977440&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Me&#47;MentalHealth_15939620977440&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1594048145809');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+   
+  
+</div>
+
+<script>
+
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+ $('#exp').html("Please use a PC for better experience");
+ alert("Please use a PC for better experience!")
+}
+$('#sentiment').hide();
+$('#patient').hide();
+$('#mentalh').hide();
+$(window).on('load',function(){
+$('#sentiment').show();
+$('#patient').show();
+$('#mentalh').show();
+$('#viz1594044066691').show();
+ $('#viz1594043334254').hide();
+ $('#viz1594048145809').hide();
+ });
+ $('#sentiment').click(function(){
+ $('#viz1594044066691').show();
+ $('#viz1594043334254').hide();
+ $('#viz1594048145809').hide();
+ });
+ $('#patient').click(function(){
+ $('#viz1594044066691').hide();
+ $('#viz1594043334254').show();
+ $('#viz1594048145809').hide();
+ });
+ $('#mentalh').click(function(){
+ $('#viz1594044066691').hide();
+ $('#viz1594043334254').hide();
+ $('#viz1594048145809').show();
+ });
+ 
+</script>
+{% endblock content %}
